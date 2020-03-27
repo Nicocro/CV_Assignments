@@ -21,4 +21,4 @@ fig, axes = plt.subplots(10,2,figsize=(9,9),
  subplot_kw={'xticks':[], 'yticks':[]},
  gridspec_kw=dict(hspace=0.01, wspace=0.01))
 for i, ax in enumerate(axes.flat):
- ax.cv2.imshow(faces.iloc[i].values.reshape(64,64),cmap='gray')
+ ax.imshow(faces.iloc[i].values.reshape(64,64),cmap='gray')
