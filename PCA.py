@@ -16,14 +16,10 @@ for path in iglob('Dataset_Faces/SubjectA_GR/*.png'):
  img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
  face = pd.Series(img.flatten(),name=path)
  faces = faces.append(face).astype(int)
-
-faces.astype(int)
  
-print(len(faces))
-print(len(faces.columns))
-print(faces.head())
-
-imageshaped = np.reshape(np.array(faces.iloc[0]), (64,64))
+#print(len(faces))
+#print(len(faces.columns))
+#print(faces.head())
 
 def displayimages(scatola):
 #This function is designed to take a dataframe with faces as an argument, 
@@ -42,12 +38,30 @@ def displayimages(scatola):
 
     return
 
-from sklearn.decomposition import PCA
-#n_components=0.80 means it will return the Eigenvectors that have the 80% of the variation in the dataset
-faces_pca = PCA(n_components=0.8)
-faces_pca.fit(faces)
+#displayimages(faces)
 
-displayimages(faces_pca)
+#returns a pandas series with key value = imgpath e value column (index=0) with the mean of
+#the original row
+faces_mean = faces.apply(lambda x: x.mean(), axis=1).astype(int)
+#faces_centered = faces_centered.join(pd.concat([faces_centered.0]*4096) 
+#displayimages(faces)
+
+
+faces_centered = faces.subtract(faces_mean, axis = 1)
+print(len(faces_centered))
+print(len(faces_centered.columns))
+print(faces_centered.head())
+
+#from sklearn.decomposition import PCA
+#n_components=0.80 means it will return the Eigenvectors that have the 80% of the variation in the dataset
+#faces_pca = PCA(n_components=0.8)
+#faces_pca.fit(faces)
+
+#fig, axes = plt.subplots(2,10,figsize=(9,3),
+# subplot_kw={'xticks':[], 'yticks':[]},
+ #gridspec_kw=dict(hspace=0.01, wspace=0.01))
+#for i, ax in enumerate(axes.flat):
+# ax.imshow(faces_pca.components_[i].reshape(64,64),cmap='gray')
 
 
 
