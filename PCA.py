@@ -41,17 +41,15 @@ def displayimages(scatola):
 #displayimages(faces)
 
 #returns a pandas series with key value = imgpath e value column (index=0) with the mean of
-#the original row
-faces_mean = faces.apply(lambda x: x.mean(), axis=1).astype(int)
-#faces_centered = faces_centered.join(pd.concat([faces_centered.0]*4096) 
-#displayimages(faces)
+#the column 
+faces_mean = faces.apply(lambda x: x.mean(), axis=0).astype(int)
 
-
+#returns a pandas dataframe with centered images (original images - the mean)
 faces_centered = faces.subtract(faces_mean, axis = 1)
-print(len(faces_centered))
-print(len(faces_centered.columns))
-print(faces_centered.head())
 
+
+
+#displayimages(faces_centered)
 #from sklearn.decomposition import PCA
 #n_components=0.80 means it will return the Eigenvectors that have the 80% of the variation in the dataset
 #faces_pca = PCA(n_components=0.8)
