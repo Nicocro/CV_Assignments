@@ -7,7 +7,8 @@ import os
 import requests
 from pathlib import Path
 from glob import iglob
-import cv2
+import cv2 
+from sklearn.decomposition import TruncatedSVD
 
 #Build a dataframe of faces flattened out into 1D arrays.  Output is a dataframe with 
 # 1 row for each image and 4096 columns (64x64) of the flattened pixels
@@ -47,8 +48,22 @@ faces_mean = faces.apply(lambda x: x.mean(), axis=0).astype(int)
 #returns a pandas dataframe with centered images (original images - the mean)
 faces_centered = faces.subtract(faces_mean, axis = 1)
 
+#this has note been used for now 
+svd = TruncatedSVD(n_components=5)
+svd.fit(faces_centered)
 
+#this used for visualization
+U, Sigma, VT = np.linalg.svd(faces_centered, full_matrices=False)
 
+# Sanity check on dimensions
+print("X:", faces_centered.shape)
+print("U:", U.shape)
+print("Sigma:", Sigma.shape)
+print("V^T:", VT.shape)
+print(type(VT))
+
+principal_components = pd.DataFrame(VT)
+displayimages(principal_components)
 #displayimages(faces_centered)
 #from sklearn.decomposition import PCA
 #n_components=0.80 means it will return the Eigenvectors that have the 80% of the variation in the dataset
