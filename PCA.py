@@ -62,8 +62,18 @@ print("Sigma:", Sigma.shape)
 print("V^T:", VT.shape)
 print(type(VT))
 
+#the  right singular vector visualzied
 principal_components = pd.DataFrame(VT)
-displayimages(principal_components)
+#displayimages(principal_components)
+
+weights = faces_centered.dot(principal_components.transpose())
+print('weights:', weights.shape)
+print(weights)
+
+reconstructed_faces = weights.dot(principal_components)
+reconstructed_faces = reconstructed_faces.add(faces_mean, axis = 1)
+
+displayimages(reconstructed_faces)
 #displayimages(faces_centered)
 #from sklearn.decomposition import PCA
 #n_components=0.80 means it will return the Eigenvectors that have the 80% of the variation in the dataset
