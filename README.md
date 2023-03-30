@@ -1,2 +1,2 @@
 # CV_Assignments
-CV Assignments KUL
+Computer Vision Assignments - KU Leuven Master in AI
